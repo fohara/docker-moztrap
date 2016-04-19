@@ -30,4 +30,4 @@ $ docker run -d --link=mysql:mysql -p 8000:8000 docker-moztrap
 ``` shell
 $ docker run -it --link=mysql:mysql docker-moztrap /moztrap-add-user.sh user user@localhost qwerty
 ```
-This will add a basic user to the app with a class of 'user', a username set to "user@localhost", and password set to "qwerty".
+This will add a basic user to the app with a username set to "user", an email address set to "user@localhost", and a password set to "qwerty".
