@@ -60,5 +60,5 @@ Finally, the container can be started by the following:
 $ docker run -d --link=<name of mysql container>:db -p 8000:8000 docker-moztrap
 ```
 
-Moztrap should immediately become accessable on http://localhost:8000 onc the above command is run.
+Moztrap should immediately become accessable on http://localhost:8000 once the above command is run.
 
