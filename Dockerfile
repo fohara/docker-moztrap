@@ -1,50 +1,46 @@
 FROM ubuntu
 MAINTAINER mccarrmb <mccarrmb@github.com>
 
+#Persistent environment variables
+ENV DEBIAN_FRONTEND=noninteractive
+ENV DB_ROOT_PASSWORD=moztrap
+ENV MOZTRAP_ENV="/moztrap/.moztrap-env"
+
 #Disables Upstart
-RUN dpkg-divert --local --rename --add /sbin/initctl &&        \
-    ln -sf /bin/true /sbin/initctl &&                          \
+RUN dpkg-divert --local --rename --add /sbin/initctl && \
+    ln -sf /bin/true /sbin/initctl && \
     ln -sf /bin/false /usr/sbin/policy-rc.d
 
-#Install required packages
+#Install required Ubuntu packages
 RUN apt-get update --yes
-RUN apt-get install --yes --quiet python-pip git python-dev    \
-    libmysqlclient-dev build-essential mysql-client supervisor \ 
-    nginx memcached &&                                         \
-    apt-get clean
+RUN apt-get install --yes --quiet python-pip git python-dev \
+ libmysqlclient-dev build-essential mysql-client supervisor \
+ nginx memcached libxml2-dev libxslt1-dev && \
+ apt-get clean
 
-#Persistent environment variables
-ENV MOZTRAP_ENV="/moztrap/.venv"
+#Install required Python tools
+RUN pip install virtualenv uwsgi
 
-RUN pip install virtualenv
-RUN pip install uwsgi
-
-#Pull in the Moztrap repository and all sub-modules within 
-#(Moztrap 1.5.4 is the stable release as of this script creation)
+#Pull in the Moztrap repository and all sub-modules within
 RUN git clone --recursive git://github.com/mozilla/moztrap
-RUN cd /moztrap && git checkout 1.5.4
 
+#Copy over dependency and main app configs
 COPY moztrap moztrap/
-WORKDIR /moztrap
+COPY etc etc/
 
 #Initializing Moztrap python environment
-RUN virtualenv .venv
-RUN ./with_venv.sh ./bin/install-reqs
-RUN ./with_venv.sh ./manage.py collectstatic --noinput
+RUN virtualenv $MOZTRAP_ENV
+RUN . $MOZTRAP_ENV/bin/activate && /moztrap/bin/install-reqs && \
+    /moztrap/manage.py collectstatic --noinput
 RUN chown -R www-data /moztrap
+RUN mkdir -p /var/run/nginx
 
-WORKDIR /
-
-ADD moztrap-init.sh /
-ADD moztrap-nginx /etc/nginx/sites-enabled/
-ADD moztrap-supervisor.conf /etc/supervisor/conf.d/
-ADD moztrap-add-user.sh /
-ADD moztrap-uwsgi.ini /
-
-#I don't think this is required - uses python dev web server
-ADD run.sh /
+#Move Moztrap helpers over
+ADD init /
+ADD add-user /
 
 EXPOSE 8000
+
 #Runs supervisord in the foreground for debugging purposes
 CMD ["/usr/bin/supervisord", "-n"]
 

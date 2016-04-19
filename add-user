@@ -1,0 +1,4 @@
+#!/bin/sh
+
+. $MOZTRAP_ENV/bin/activate 
+python /moztrap/add_user.py $@

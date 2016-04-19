@@ -1,11 +1,14 @@
 from os import environ
 
+#DB_PORT_3306_TCP_ADDR is pulled from the docker link alias.
+#See README.md for usage.
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "moztrap",
         "USER": "moztrap",
-        "HOST": environ.get("MYSQL_PORT_3306_TCP_ADDR", ""),  # empty string == localhost
+        "HOST": environ.get("DB_PORT_3306_TCP_ADDR", ""),
         "PASSWORD": "000000",
         "STORAGE_ENGINE": "InnoDB",
         "OPTIONS": {

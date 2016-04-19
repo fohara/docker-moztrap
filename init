@@ -1,0 +1,15 @@
+#!/bin/sh
+
+#Create database and grant all permissions to the moztrap user
+#(--host variable given is pulled from docker link alias)
+mysql --host=$DB_PORT_3306_TCP_ADDR --user=root --password=$DB_ROOT_PASSWORD \
+--execute="CREATE DATABASE IF NOT EXISTS  moztrap CHARACTER SET utf8"
+
+mysql --host=$DB_PORT_3306_TCP_ADDR --user=root --password=$DB_ROOT_PASSWORD \
+--execute="GRANT ALL PRIVILEGES ON moztrap.* TO 'moztrap'@'%' IDENTIFIED BY '000000';"
+
+#Initialize the database for the Moztrap app
+. $MOZTRAP_ENV/bin/activate
+python /moztrap/manage.py syncdb --migrate --noinput
+python /moztrap/manage.py create_default_roles
+python /moztrap/add_user.py admin admin@localhost.local 000000
