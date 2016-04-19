@@ -1,10 +1,6 @@
 # Moztrap
 
-This is a test case management system base on Python/Django
-
-## Additional Information
-
-[Ubuntu: Piloting a new test case management tool](https://blueprints.launchpad.net/ubuntu/+spec/other-p-qa-test-case-management-tool)
+A lightweight test case management system based on Python/Django
 
 ## Installation
 
@@ -18,7 +14,7 @@ $ docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=qwerty --name mysql orchardu
 ### Initiate Moztrap
 
 ``` shell
-docker run -it --link=mysql:mysql -e MYSQL_ENV_MYSQL_PASS=qwerty docker-moztrap /moztrap-init.sh
+$ docker run -it --link=mysql:mysql -e MYSQL_ENV_MYSQL_PASS=qwerty docker-moztrap /moztrap-init.sh
 ```
 
 This command will initiate database for Moztrap.
@@ -29,20 +25,9 @@ This command will initiate database for Moztrap.
 $ docker run -d --link=mysql:mysql -p 8000:8000 docker-moztrap
 ```
 
-### Additional Command
+### Adding a User to Moztrap Container
 
 ``` shell
 $ docker run -it --link=mysql:mysql docker-moztrap /moztrap-add-user.sh user user@localhost qwerty
 ```
-
-## Simple User Tutorial
-
-### Some basic steps
-
-1. Create an environment
-2. Create a product
-3. Create a version
-4. Create a test suit
-5. Create test cases
-6. Create a test run
-7. Run a test and submit its result (Pass/Failed)
+This will add a basic user to the app with a class of 'user', a username set to "user@localhost", and password set to "qwerty".
