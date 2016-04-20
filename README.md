@@ -33,6 +33,8 @@ Note that at this point docker-moztrap needs to be linked to the running MySQL c
 ``` shell
 $ docker run -it --link=<name of mysql container>:db docker-moztrap /init
 ```
+After the initialization is complete, the user 'admin' will be added to the Moztrap database.  The password will be set to 'admin' and the account should have all necessary permissions to administer the Moztrap application.
+
 
 ### Adding a User to a docker-moztrap Container
 
