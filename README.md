@@ -11,8 +11,8 @@ A lightweight test case management system based on Python/Django and provided by
 The docker-moztrap container is built assuming that the end user will link it with a MySQL container.  
 
 ``` shell
-$ docker pull orchardup/mysql
-$ docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=moztrap --name <name of mysql container> orchardup/mysql
+$ docker pull mysql
+$ docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=moztrap --name <name of mysql container> mysql
 ```
 
 Although any MySQL container will do, the root MySQL user's password must be set to 'moztrap'. Naming isn't required but it is much more helpful than using the random names assigned when containers are run.
