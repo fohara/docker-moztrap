@@ -47,7 +47,7 @@ The --staff and --admin flags toggle the appropriate user permissions in the dat
 Example usage within docker:
 
 ``` shell
-$ docker run -it --link=mysql:mysql docker-moztrap /add-user admin admin@localhost.local AdminPassw0rd --staff --admin
+$ docker run -it --link=mysql:db docker-moztrap /add-user admin admin@localhost.local AdminPassw0rd --staff --admin
 ```
 The above example will provide an account named 'admin' that will have full access to the application.
 
