@@ -32,8 +32,9 @@ COPY etc etc/
 RUN virtualenv $MOZTRAP_ENV
 RUN . $MOZTRAP_ENV/bin/activate && /moztrap/bin/install-reqs && \
     /moztrap/manage.py collectstatic --noinput
-RUN chown -R www-data /moztrap
 RUN mkdir -p /var/run/nginx
+RUN chown -R www-data:www-data /var/run/nginx && chmod 770 /var/run/nginx 
+RUN chown -R www-data /moztrap
 
 #Move Moztrap helpers over
 ADD init /
@@ -41,6 +42,6 @@ ADD add-user /
 
 EXPOSE 8000
 
-#Runs supervisord in the foreground for debugging purposes
+#Runs supervisord in the foreground or the damn docker closes
 CMD ["/usr/bin/supervisord", "-n"]
 
