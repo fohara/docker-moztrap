@@ -12,4 +12,4 @@ mysql --host=$DB_PORT_3306_TCP_ADDR --user=root --password=$DB_ROOT_PASSWORD \
 . $MOZTRAP_ENV/bin/activate
 python /moztrap/manage.py syncdb --migrate --noinput
 python /moztrap/manage.py create_default_roles
-python /moztrap/add_user.py admin admin@localhost.local 000000
+python /moztrap/add_user.py admin admin@localhost.local 000000 --staff --admin
