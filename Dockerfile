@@ -22,7 +22,7 @@ RUN apt-get install --yes --quiet python-pip git python-dev \
 RUN pip install virtualenv uwsgi
 
 #Pull in the Moztrap repository and all sub-modules within
-RUN git clone --recursive git://github.com/mozilla/moztrap
+RUN git clone --recursive git://github.com/mccarrmb/moztrap
 
 #Copy over dependency and main app configs
 COPY moztrap moztrap/

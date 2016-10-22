@@ -64,3 +64,4 @@ $ docker run -d --link=<name of mysql container>:db -p 8000:8000 docker-moztrap
 
 Moztrap should immediately become accessable on http://localhost:8000 once the above command is run.
 
+Sat Oct 22 16:37:07 EDT 2016
