@@ -30,7 +30,7 @@ COPY etc etc/
 
 #Initializing Moztrap python environment
 RUN virtualenv $MOZTRAP_ENV
-RUN . $MOZTRAP_ENV/bin/activate && /moztrap/bin/install-reqs && \
+RUN . $MOZTRAP_ENV/bin/activate && pip install 'setuptools>=33,<34' && /moztrap/bin/install-reqs && \
     /moztrap/manage.py collectstatic --noinput
 RUN mkdir -p /var/run/nginx
 RUN chown -R www-data:www-data /var/run/nginx && chmod 770 /var/run/nginx 
